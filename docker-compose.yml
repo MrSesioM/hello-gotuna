@@ -1,7 +1,0 @@
-version: "3"
-services:
-  gotuna:
-    build: .
-    image: debian:11.slim
-    ports:
-      - "8888:8888"
