@@ -1,0 +1,29 @@
+{{define "title"}}{{t "Profile"}}{{end}}
+
+{{define "content"}}
+  <div class="columns">
+    <div class="column">
+    <form method="POST" action="/profile">
+      {{csrf}}
+      <div class="field">
+        <label class="label">{{t "ID"}}</label>
+        <div class="control">
+          <input class="input" value="{{currentUser.ID}}" disabled>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">{{t "Email"}}</label>
+        <div class="control">
+          <input class="input" value="{{currentUser.Email}}" disabled>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">{{t "Name"}}</label>
+        <div class="control">
+          <input class="input" value="{{currentUser.Name}}" disabled>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+{{end}}

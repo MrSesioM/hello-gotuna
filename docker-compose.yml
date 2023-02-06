@@ -1,0 +1,7 @@
+version: "3"
+services:
+  gotuna:
+    build: .
+    image: alpine:3.17
+    ports:
+      - "8888:8888"

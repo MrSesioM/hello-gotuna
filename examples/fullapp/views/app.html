@@ -1,0 +1,84 @@
+{{- define "app" -}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{block "title" .}}{{end}}</title>
+    <link rel="stylesheet" href="{{static "/bulma/bulma.min.css"}}">
+    <link rel="stylesheet" href="{{static "/style.css"}}">
+  </head>
+  <body>
+
+    {{if not isGuest}}
+    <nav class="navbar is-info" role="navigation" aria-label="main navigation">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            {{t "Home"}}
+          </a>
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarmenu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+        <div id="navbarmenu" class="navbar-menu">
+          <div class="navbar-end">
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                {{currentLocale}}
+              </a>
+              <div class="navbar-dropdown is-right">
+                <a class="navbar-item" href="/setlocale/en-US">
+                  English
+                </a>
+                <a class="navbar-item" href="/setlocale/fr-FR">
+                  French
+                </a>
+              </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                {{currentUser.Name}}
+              </a>
+              <div class="navbar-dropdown is-right">
+                <a class="navbar-item" href="/profile">
+                  {{t "Profile"}}
+                </a>
+                <a class="navbar-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                  <form id="logout-form" method="POST" action="/logout">
+                    {{csrf}}
+                    {{t "Log Out"}}
+                  </form>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    {{end}}
+
+    <div class="notification-wrap">
+      {{range $e := .Flashes}}
+      <div class="notification {{if $e.Kind}}is-{{$e.Kind}}{{end}} {{if $e.AutoClose}}auto-close{{end}}">
+        <button class="delete"></button>
+        {{$e.Message}}
+      </div>
+      {{end}}
+    </div>
+
+    <section class="section">
+      <div class="container">
+        {{block "content" .}}{{end}}
+      </div>
+    </section>
+
+    <script type="text/javascript" src="{{ static "/script.js"}}"></script>
+    {{block "additional_scripts" .}}{{end}}
+
+  </body>
+</html>
+
+{{- end -}}
